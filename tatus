@@ -1,0 +1,147 @@
+warning: LF will be replaced by CRLF in .VSCodeCounter/2020-10-08_08-52-18/details.md.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .VSCodeCounter/2020-10-08_08-52-18/results.csv.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .VSCodeCounter/2020-10-08_08-52-18/results.md.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .VSCodeCounter/2020-10-08_08-52-18/results.txt.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .VSCodeCounter/2020-10-08_08-52-50/details.md.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .VSCodeCounter/2020-10-08_08-52-50/results.csv.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .VSCodeCounter/2020-10-08_08-52-50/results.md.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in .VSCodeCounter/2020-10-08_08-52-50/results.txt.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in app/Http/Controllers/ProductController.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in app/ProductKey.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in composer.lock.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_07_15_194036_products_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_07_15_201515_product_keys.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_07_28_154551_add_theme_to_servers_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_07_28_161550_create_themes_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_07_31_010143_add_image_path_to_updates_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_07_31_012731_add_is_active_and_image_path_to_posts_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_07_31_192312_create_likes_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_08_03_180242_create_logs_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_08_03_205014_add_auto_whitelist_to_servers_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_09_23_023143_add_screenshot_path_to_detections_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_09_23_210845_add_discord_whitelist_to_servers_table.php.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in database/migrations/2020_10_18_190125_create_permissions_table.php.
+The file will have its original line endings in your working directory
+[1mdiff --git a/app/Http/Controllers/Api/LauncherLoginController.php b/app/Http/Controllers/Api/LauncherLoginController.php[m
+[1mindex 10cc677..7ee643e 100644[m
+[1m--- a/app/Http/Controllers/Api/LauncherLoginController.php[m
+[1m+++ b/app/Http/Controllers/Api/LauncherLoginController.php[m
+[36m@@ -188,12 +188,11 @@[m [mclass LauncherLoginController extends Controller[m
+             ['launcher_token', $server->launcher_token][m
+         ])->first();[m
+         [m
+[31m-        if($player->profile_photo == "https://launchwares.com/img/launchwares.png"){[m
+[32m+[m[32m        if($player->profile_photo == "https://api.vlastcommunity.net/img/vlast.png"){[m
+             $player->using_launcher = true;[m
+[31m-            return response($player->only(['using_launcher']), 200);[m
+[31m-        }else{[m
+[31m-            return response($player->only(['using_launcher']), 200);[m
+         }[m
+[32m+[m
+[32m+[m[32m        return response($player->only(['using_launcher']), 200);[m
+     }[m
+ [m
+     public function exitLauncher(Server $server, Request $request)[m
+[36m@@ -204,7 +203,7 @@[m [mclass LauncherLoginController extends Controller[m
+ [m
+         if ($validator->fails()) {[m
+             return response()->json([[m
+[31m-                'message' => $validator->message()[m
+[32m+[m[32m                'message' => $validator->messages()[m
+             ]);[m
+         }[m
+ [m
+[36m@@ -213,9 +212,81 @@[m [mclass LauncherLoginController extends Controller[m
+             ['launcher_token', $server->launcher_token][m
+         ])->first();[m
+ [m
+[31m-        $player->using_launcher = false;[m
+[32m+[m[32m        $player->ready_to_play = false;[m
+         $player->save();[m
+ [m
+         return response(204);[m
+     }[m
+[32m+[m
+[32m+[m[32m    public function isPlayerReady(Server $server, Request $request)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if (empty($server)) {[m
+[32m+[m[32m            return response()->json("Server not found", 404);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $validator = Validator::make($request->all(), [[m
+[32m+[m[32m            'uid' => 'required'[m
+[32m+[m[32m        ]);[m
+[32m+[m
+[32m+[m[32m        if ($validator->fails()) {[m
+[32m+[m[32m            return response()->json([[m
+[32m+[m[32m                'message' => $validator->messages()[m
+[32m+[m[32m            ]);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $player = Player::where([[m
+[32m+[m[32m            ['uid', $request->uid],[m
+[32m+[m[32m            ['launcher_token', $server->launcher_token][m
+[32m+[m[32m        ])->first();[m
+[32m+[m
+[32m+[m[32m        $ready = false;[m
+[32m+[m
+[32m+[m[32m        if ($player->ready_to_play == true) {[m
+[32m+[m[32m            $player->ready_to_play = false;[m
+[32m+[m[32m            $player->save();[m
+[32m+[m[32m            $ready = true;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        return response()->json($ready, 200);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public function connect(Request $request)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $validator = Validator::make($request->all(), [[m
+[32m+[m[32m            'uid' => 'required',[m
+[32m+[m[32m            'id' => 'required'[m
+[32m+[m[32m        ]);[m
+[32m+[m
+[32m+[m[32m        if ($validator->fails()) {[m
+[32m+[m[32m            return response()->json([[m
+[32m+[m[32m                'message' => $validator->messages()[m
+[32m+[m[32m            ]);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $server = Server::where("rpc_id", $request->id)->first();[m
+[32m+[m
+[32m+[m[32m        if (empty($server)) {[m
+[32m+[m[32m            return response()->json("Server not found", 404);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        $player = Player::where([[m
+[32m+[m[32m            ['uid', $request->uid],[m
+[32m+[m[32m            ['launcher_token', $server->launcher_token][m
+[32m+[m[32m        ])->first();[m
+[32m+[m
+[32m+[m[32m        if (empty($player)) {[m
+[32m+[m[32m            return response()->json("User not found", 404);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        if ($player->using_launche

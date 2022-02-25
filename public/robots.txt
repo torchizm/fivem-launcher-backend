@@ -1,0 +1,31 @@
+User-agent: msnbot
+Crawl-delay: 120
+Disallow: /profile
+Disallow: /results
+Disallow: /reviews
+
+User-agent: *
+Disallow: /profile
+Disallow: /results
+Disallow: /reviews
+
+User-agent: discobot
+Disallow: /
+
+User-agent: dotbot
+Disallow: /
+
+User-agent: Slurp
+Crawl-delay: 4
+
+User-agent: yacybot
+Disallow: /
+
+User-agent: ia_archiver
+Allow: /
+
+User-agent: alexabot
+Allow: /
+
+User-agent: HTTrack
+Disallow: /
